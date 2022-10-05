@@ -361,10 +361,13 @@ func (f *BaseFetcher) fetchMetadata(ctx context.Context) (interface{}, error) {
 	eg.Go(func() error {
 		defer close(ch)
 		return f.bkt.Iter(ctx, "", func(name string) error {
+			level.Debug(f.logger).Log("msg", "distribute blocks", "name", name)
 			id, ok := IsBlockDir(name)
 			if !ok {
+				level.Debug(f.logger).Log("msg", "distribute blocks", "name", name, "ok", ok)
 				return nil
 			}
+			level.Debug(f.logger).Log("msg", "distribute blocks", "name", name, "id", id)
 
 			select {
 			case <-ctx.Done():

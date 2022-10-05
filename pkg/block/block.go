@@ -9,6 +9,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"fmt"
 	"io"
 	"os"
 	"path"
@@ -297,6 +298,7 @@ func DownloadMeta(ctx context.Context, logger log.Logger, bkt objstore.Bucket, i
 
 func IsBlockDir(path string) (id ulid.ULID, ok bool) {
 	id, err := ulid.Parse(filepath.Base(path))
+	fmt.Printf("name: %s id: %v", path, id)
 	return id, err == nil
 }
 
